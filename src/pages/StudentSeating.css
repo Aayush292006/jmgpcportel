@@ -1,0 +1,81 @@
+    /* Pure page ka background navy blue */
+body {
+    background-color: rgb(22, 52, 65);
+  }
+  
+  /* Student Seating ka box */
+  .student-seating-container {
+    text-align: center;
+    background-color: #1c243d; /* Dark Blue */
+    color:  #0ed26d;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px #0ed26d;
+    width: 50%;
+    margin: auto;
+  }
+  
+  /* Title styling */
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0px 0px 10px #0ed26d;
+  }
+  
+  /* Form container */
+  .form-container {
+    margin: 20px 0;
+  }
+  
+  input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #0a0f1a;/* Dark Blue */
+    color: #0ed26d;
+    border: 2px solid #0ed26d;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  /* Submit button */
+  button {
+    width: 85%;
+    padding: 12px;
+    background-color:  #0ed26d;
+    color: #18354f; /* Dark Blue */
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color:  #0ed26d;
+  }
+  
+  /* Exam details ka box */
+  .exam-details {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #0ed26d;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px  #0ed26d;
+    background-color: #1e384f; /* Dark Blue */
+  }
+  
+  /* Individual Exam Box */
+  .exam-box {
+    background-color: #18364a; /* Dark Blue */
+    border: 1px solid  #0ed26d;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+  
+  .no-data {
+    color: red;
+    font-weight: bold;
+  }
+  

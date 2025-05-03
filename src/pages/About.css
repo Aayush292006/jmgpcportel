@@ -1,0 +1,28 @@
+.about-container {
+  max-width: 800px; /* Box width */
+  background-color: #131a26; /* Dark background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(51, 255, 102, 0.5); /* Green neon glow */
+  margin: 50px auto; /* Center align */
+  color: white;
+}
+
+.about-container h2, 
+.about-container h3 {
+  color: #33ff66; /* Neon green headings */
+}
+
+.about-container p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.about-container a {
+  color: #33ff66;
+  text-decoration: none;
+}
+
+.about-container a:hover {
+  text-decoration: underline;
+}

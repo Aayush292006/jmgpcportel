@@ -1,0 +1,45 @@
+
+/* Reset layout and scroll behavior */
+/* GLOBAL RESET */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* ✅ Prevent horizontal scroll */
+  overflow-y: auto;   /* ✅ Allow vertical scroll only if needed */
+  scroll-behavior: smooth;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: #33ff66; /* Neon green color for headings */
+}
+
+.card {
+  background: hwb(210 95% 3%); /* Darker shade for sections */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(51, 255, 102, 0.5); /* Green glow effect */
+  margin: 20px 0;
+}
+
+button {
+  background-color: #33ff66; /* Neon green button */
+  color: #f8f9fa;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #29cc55; /* Slightly darker on hover */
+}
+
+
+

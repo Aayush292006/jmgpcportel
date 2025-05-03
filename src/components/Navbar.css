@@ -1,0 +1,45 @@
+/* Navbar.css */
+
+.navbar {
+  background-color: #1a1a2e;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #f9f9f9;
+  position: relative;
+  padding: 10px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Hover Effect */
+.nav-link:hover {
+  color: #f5f107;
+}
+
+/* Active Link */
+.nav-link.active {
+  color: #e8ecf0;
+}
+
+/* Active Link Underline */
+.nav-link.active::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #2e3b55;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}

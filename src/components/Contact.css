@@ -1,0 +1,39 @@
+.contact-container {
+  max-width: 500px;  /* Form ka width fix karein */
+  background-color: #131a26; /* Dark box */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(51, 255, 102, 0.5); /* Green glow effect */
+  margin: 50px auto; /* Center align karein */
+}
+
+.contact-container h2 {
+  text-align: center;
+  color: #33ff66; /* Neon green heading */
+}
+
+.contact-container input,
+.contact-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #33ff66; /* Green border */
+  border-radius: 5px;
+  background-color: #0a0f1a;
+}
+
+.contact-container button {
+  width: 100%;
+  background-color: #33ff66;
+  color: black;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.contact-container button:hover {
+  background-color: #29cc55;
+}
+
+  
