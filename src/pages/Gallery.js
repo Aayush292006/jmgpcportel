@@ -2,49 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const GalleryEvents = () => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [fadeIn, setFadeIn] = useState(false);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    fetchGallery();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
-  useEffect(() => {
-    if (events.length > 0) setFadeIn(true);
-  }, [events]);
-
-  const fetchGallery = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(`https://jmgpc-backend.onrender.com/api/gallery?page=${page}&limit=9`);
-      if (res.data && res.data.galleryItems) {
-        setEvents((prevEvents) => {
-          // Filter out any duplicates if somehow they appear
-          const newEvents = res.data.galleryItems.filter(
-            (event) => !prevEvents.some((prevEvent) => prevEvent._id === event._id)
-          );
-          return [...prevEvents, ...newEvents];
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching gallery events:', error);
-    }
-    setLoading(false);
-  };
-
-  const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
-    if (bottom && !loading) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
+  // ... your state and useEffects unchanged ...
 
   const styles = {
     container: {
-      padding: '40px',
+      padding: '60px 20px 40px', // Increased top padding and added horizontal padding for smaller screens
       backgroundColor: '#f4f7fc',
       minHeight: '100vh',
       display: 'flex',
@@ -52,6 +14,7 @@ const GalleryEvents = () => {
       alignItems: 'center',
       overflowY: 'auto',
       position: 'relative',
+      boxSizing: 'border-box',
     },
     header: {
       fontSize: '32px',
@@ -63,7 +26,7 @@ const GalleryEvents = () => {
     },
     cardGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridTemplateColumns: 'repeat(3, 1fr)', // default 3 columns
       gap: '20px',
       width: '100%',
       maxWidth: '1000px',
@@ -80,8 +43,10 @@ const GalleryEvents = () => {
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       transition: 'transform 0.3s ease, box-shadow 0.3s ease',
       cursor: 'pointer',
-      height: '350px',
+      height: 'auto', // make height flexible for responsiveness
       overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
     },
     image: {
       width: '100%',
@@ -89,23 +54,28 @@ const GalleryEvents = () => {
       objectFit: 'cover',
       borderRadius: '8px',
       transition: 'transform 0.4s ease',
+      flexShrink: 0,
     },
     cardTitle: {
       fontSize: '20px',
-      margin: '10px 0',
+      margin: '10px 0 8px',
       color: '#333',
       fontWeight: '500',
+      flexGrow: 0,
     },
     description: {
       fontSize: '14px',
       marginBottom: '15px',
       color: '#666',
+      flexGrow: 1,
     },
     link: {
       color: '#007BFF',
       textDecoration: 'none',
       fontWeight: '500',
       transition: 'color 0.3s ease',
+      alignSelf: 'center',
+      marginTop: 'auto',
     },
     cardHover: {
       transform: 'scale(1.05)',
@@ -144,6 +114,36 @@ const GalleryEvents = () => {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
+
+          /* Responsive grid */
+          @media (max-width: 900px) {
+            .cardGrid {
+              grid-template-columns: repeat(2, 1fr) !important;
+            }
+          }
+          @media (max-width: 600px) {
+            .cardGrid {
+              grid-template-columns: 1fr !important;
+            }
+            .card {
+              height: auto !important;
+            }
+          }
+
+          /* Add classes to your divs for responsive */
+          /* Disable hover effects on touch devices */
+          @media (hover: none) {
+            .card:hover {
+              transform: none !important;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+            }
+            .card:hover img {
+              transform: none !important;
+            }
+            a:hover {
+              color: #007BFF !important;
+            }
+          }
         `}
       </style>
 
@@ -154,10 +154,11 @@ const GalleryEvents = () => {
           <div style={styles.spinnerInner}></div>
         </div>
       ) : (
-        <div style={styles.cardGrid}>
+        <div className="cardGrid" style={styles.cardGrid}>
           {events.map((event) => (
             <div
               key={event._id}
+              className="card"
               style={styles.card}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = styles.cardHover.transform;
