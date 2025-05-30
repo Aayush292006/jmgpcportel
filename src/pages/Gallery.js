@@ -2,11 +2,50 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const GalleryEvents = () => {
-  // ... your state and useEffects unchanged ...
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [fadeIn, setFadeIn] = useState(false);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    fetchGallery();
+  }, [page]);
+
+  useEffect(() => {
+    if (events.length > 0) setFadeIn(true);
+  }, [events]);
+
+  const fetchGallery = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`https://jmgpc-backend.onrender.com/api/gallery?page=${page}&limit=9`);
+      if (res.data && res.data.galleryItems) {
+        setEvents((prevEvents) => {
+          const newEvents = res.data.galleryItems.filter(
+            (event) => !prevEvents.some((prevEvent) => prevEvent._id === event._id)
+          );
+          return [...prevEvents, ...newEvents];
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching gallery events:', error);
+    }
+    setLoading(false);
+  };
+
+  const handleScroll = (e) => {
+    const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
+    if (bottom && !loading) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const styles = {
     container: {
-      padding: '60px 20px 40px', // Increased top padding and added horizontal padding for smaller screens
+      paddingTop: '60px',  // top padding added
+      paddingLeft: '20px',
+      paddingRight: '20px',
+      paddingBottom: '40px',
       backgroundColor: '#f4f7fc',
       minHeight: '100vh',
       display: 'flex',
@@ -26,13 +65,16 @@ const GalleryEvents = () => {
     },
     cardGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)', // default 3 columns
+      gridTemplateColumns: 'repeat(3, 1fr)',
       gap: '20px',
       width: '100%',
       maxWidth: '1000px',
       opacity: fadeIn ? 1 : 0,
       transform: fadeIn ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s ease, transform 0.6s ease',
+
+      // Responsive grid:
+      // use a media query below to adjust for smaller screens
     },
     card: {
       border: '1px solid #ddd',
@@ -43,10 +85,11 @@ const GalleryEvents = () => {
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
       transition: 'transform 0.3s ease, box-shadow 0.3s ease',
       cursor: 'pointer',
-      height: 'auto', // make height flexible for responsiveness
+      height: '350px',
       overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
+      justifyContent: 'space-between',
     },
     image: {
       width: '100%',
@@ -54,38 +97,29 @@ const GalleryEvents = () => {
       objectFit: 'cover',
       borderRadius: '8px',
       transition: 'transform 0.4s ease',
-      flexShrink: 0,
+      marginBottom: '10px',
     },
     cardTitle: {
       fontSize: '20px',
-      margin: '10px 0 8px',
+      margin: '10px 0',
       color: '#333',
       fontWeight: '500',
-      flexGrow: 0,
+      flexShrink: 0,
     },
     description: {
       fontSize: '14px',
       marginBottom: '15px',
       color: '#666',
       flexGrow: 1,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
     link: {
       color: '#007BFF',
       textDecoration: 'none',
       fontWeight: '500',
       transition: 'color 0.3s ease',
-      alignSelf: 'center',
-      marginTop: 'auto',
-    },
-    cardHover: {
-      transform: 'scale(1.05)',
-      boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
-    },
-    cardImageHover: {
-      transform: 'scale(1.1)',
-    },
-    linkHover: {
-      color: '#0056b3',
+      flexShrink: 0,
     },
     spinner: {
       display: 'inline-block',
@@ -114,8 +148,7 @@ const GalleryEvents = () => {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
-
-          /* Responsive grid */
+          /* Responsive grid columns */
           @media (max-width: 900px) {
             .cardGrid {
               grid-template-columns: repeat(2, 1fr) !important;
@@ -128,20 +161,10 @@ const GalleryEvents = () => {
             .card {
               height: auto !important;
             }
-          }
-
-          /* Add classes to your divs for responsive */
-          /* Disable hover effects on touch devices */
-          @media (hover: none) {
-            .card:hover {
-              transform: none !important;
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-            }
-            .card:hover img {
-              transform: none !important;
-            }
-            a:hover {
-              color: #007BFF !important;
+            .container {
+              padding-top: 30px !important;
+              padding-left: 15px !important;
+              padding-right: 15px !important;
             }
           }
         `}
@@ -161,10 +184,10 @@ const GalleryEvents = () => {
               className="card"
               style={styles.card}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = styles.cardHover.transform;
-                e.currentTarget.style.boxShadow = styles.cardHover.boxShadow;
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.15)';
                 const img = e.currentTarget.querySelector('img');
-                if (img) img.style.transform = styles.cardImageHover.transform;
+                if (img) img.style.transform = 'scale(1.1)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'none';
@@ -186,12 +209,8 @@ const GalleryEvents = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={styles.link}
-                  onMouseEnter={(e) => {
-                    e.target.style.color = styles.linkHover.color;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.color = styles.link.color;
-                  }}
+                  onMouseEnter={(e) => (e.target.style.color = '#0056b3')}
+                  onMouseLeave={(e) => (e.target.style.color = '#007BFF')}
                 >
                   View More
                 </a>
