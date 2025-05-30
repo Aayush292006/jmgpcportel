@@ -177,7 +177,7 @@ const GalleryEvents = () => {
               }}
             >
               <img
-                src={`http://localhost:3000${event.imageUrl}`}
+                src={`https://jmgpc-backend.onrender.com${event.imageUrl}`}
                 alt={event.title}
                 style={styles.image}
               />
