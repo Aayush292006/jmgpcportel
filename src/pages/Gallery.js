@@ -9,10 +9,11 @@ const GalleryEvents = () => {
 
   useEffect(() => {
     fetchGallery();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {
-    setFadeIn(true);
+    if (events.length > 0) setFadeIn(true);
   }, [events]);
 
   const fetchGallery = async () => {
@@ -21,8 +22,9 @@ const GalleryEvents = () => {
       const res = await axios.get(`https://jmgpc-backend.onrender.com/api/gallery?page=${page}&limit=9`);
       if (res.data && res.data.galleryItems) {
         setEvents((prevEvents) => {
+          // Filter out any duplicates if somehow they appear
           const newEvents = res.data.galleryItems.filter(
-            (event) => !event.deleted && !prevEvents.some((prevEvent) => prevEvent._id === event._id)
+            (event) => !prevEvents.some((prevEvent) => prevEvent._id === event._id)
           );
           return [...prevEvents, ...newEvents];
         });
@@ -32,7 +34,6 @@ const GalleryEvents = () => {
     }
     setLoading(false);
   };
-  
 
   const handleScroll = (e) => {
     const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
@@ -140,19 +141,13 @@ const GalleryEvents = () => {
       <style>
         {`
           @keyframes dual-ring {
-            0% {
-              transform: rotate(0deg);
-            }
-            100% {
-              transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
         `}
       </style>
 
-      <h3 style={styles.header}></h3>
       <h3 style={styles.header}>Gallery Events</h3>
-
 
       {loading && page === 1 ? (
         <div style={styles.spinner}>
@@ -164,14 +159,15 @@ const GalleryEvents = () => {
             <div
               key={event._id}
               style={styles.card}
-              className="card-hover"
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = styles.cardHover.transform;
+                e.currentTarget.style.boxShadow = styles.cardHover.boxShadow;
                 const img = e.currentTarget.querySelector('img');
                 if (img) img.style.transform = styles.cardImageHover.transform;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'none';
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
                 const img = e.currentTarget.querySelector('img');
                 if (img) img.style.transform = 'none';
               }}
