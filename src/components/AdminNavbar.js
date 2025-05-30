@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { LogOut, Menu, X } from "lucide-react";
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // Get current location
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
@@ -23,6 +24,11 @@ const AdminNavbar = () => {
     { to: "/admin/manage-timetable", label: "Manage Timetable" },
     { to: "/admin/examdataseating", label: "Exam Data Seating" },
   ];
+
+  // Close menu when the route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   return (
     <nav className="bg-gradient-to-r from-indigo-600 via-blue-600 to-purple-600 text-white shadow-lg sticky top-0 z-50">
@@ -74,7 +80,7 @@ const AdminNavbar = () => {
             <NavLink
               key={to}
               to={to}
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsOpen(false)} // Close the menu on click
               className={({ isActive }) =>
                 `block px-4 py-3 rounded-md text-sm font-medium ${
                   isActive ? "bg-yellow-400 text-black" : "hover:bg-white hover:text-black"

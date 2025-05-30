@@ -233,11 +233,18 @@ const BlueprintGenerator = () => {
 
         {selectedRoom && (
           <>
-            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+            <div style={{ display: "flex", gap: "10px", marginBottom: "10px", flexWrap: "wrap" }}>
               <select
                 value={branchInput}
                 onChange={(e) => setBranchInput(e.target.value)}
-                style={{ flex: 2, padding: "10px", borderRadius: "8px", border: "1px solid #ddd" }}
+                style={{
+                  padding: "10px",
+                  borderRadius: "8px",
+                  border: "1px solid #ddd",
+                  flex: 1,
+                  minWidth: "200px",
+                  flexBasis: "48%", // Responsive width for medium screens
+                }}
               >
                 <option value="">-- Select Branch --</option>
                 {availableBranches.map((branch) => (
@@ -252,20 +259,24 @@ const BlueprintGenerator = () => {
                 onChange={(e) => setStudentCount(Number(e.target.value))}
                 placeholder="Students"
                 style={{
-                  flex: 1,
                   padding: "10px",
                   borderRadius: "8px",
                   border: "1px solid #ddd",
+                  flex: 1,
+                  minWidth: "200px",
+                  flexBasis: "48%", // Responsive width for medium screens
                 }}
               />
               <select
                 value={yearInput}
                 onChange={(e) => setYearInput(e.target.value)}
                 style={{
-                  flex: 1,
                   padding: "10px",
                   borderRadius: "8px",
                   border: "1px solid #ddd",
+                  flex: 1,
+                  minWidth: "200px",
+                  flexBasis: "48%", // Responsive width for medium screens
                 }}
               >
                 <option value="">-- Select Year --</option>
@@ -284,6 +295,8 @@ const BlueprintGenerator = () => {
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "0.3s ease",
+                  flex: "0 0 auto", // Keeps button size fixed
+                  width: "100%", // Full width for small screens
                 }}
               >
                 Add

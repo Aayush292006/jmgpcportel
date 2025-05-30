@@ -71,8 +71,19 @@ const StudentSeating = () => {
         color: '#222',
         marginBottom: '30px'
       }}>
+        
+      </h1>
+
+      <h1 style={{
+        fontSize: '2.5rem',
+        textAlign: 'center',
+        fontWeight: '700',
+        color: '#222',
+        marginBottom: '30px'
+      }}>
         📅 Exam Timetable
       </h1>
+
 
       {loading ? (
         <div style={{ textAlign: 'center', marginTop: '60px' }}>

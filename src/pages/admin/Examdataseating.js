@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const AdminPanel = () => {
   const [students, setStudents] = useState([]);
-  const [enrollment, setEnrollment] = useState('');
+  const [selectedStudent, setSelectedStudent] = useState(null); // to store the selected student
   const [seating, setSeating] = useState([{
     subject: '',
     paperCode: '',
@@ -84,8 +84,9 @@ const AdminPanel = () => {
     setLoading(true);
 
     try {
-      if (!enrollment.trim()) {
-        throw new Error('Enrollment number is required');
+      // Ensure a student is selected before submitting
+      if (!selectedStudent) {
+        throw new Error('Please select a student');
       }
 
       for (let i = 0; i < seating.length; i++) {
@@ -103,19 +104,19 @@ const AdminPanel = () => {
         }
       }
 
-      const examsWithEnrollment = seating.map((exam) => ({ ...exam, enrollment }));
+      const examsWithEnrollment = seating.map((exam) => ({ ...exam, enrollment: selectedStudent.enrollment }));
 
       let response;
       if (editId) {
         // PUT request to update existing seating
         response = await axios.put(`http://localhost:3000/api/seatings/${editId}`, {
-          enrollment,
+          enrollment: selectedStudent.enrollment,
           exams: examsWithEnrollment,
         });
       } else {
         // POST request to create new seating
         response = await axios.post('http://localhost:3000/api/seatings', {
-          enrollment,
+          enrollment: selectedStudent.enrollment,
           exams: examsWithEnrollment,
         });
       }
@@ -132,7 +133,7 @@ const AdminPanel = () => {
           seatNumber: '',
           roomNumber: '',
         }]);
-        setEnrollment('');
+        setSelectedStudent(null); // Reset selected student
         setEditId(null);
         fetchSeatings(); // Refresh the seating list
       }
@@ -145,7 +146,7 @@ const AdminPanel = () => {
   };
 
   const handleEdit = (data) => {
-    setEnrollment(data.enrollment);
+    setSelectedStudent(students.find(student => student.enrollment === data.enrollment));
     setSeating(data.exams || []);
     setEditId(data._id);
     setError('');
@@ -186,31 +187,26 @@ const AdminPanel = () => {
 
   return (
     <div style={{ padding: '20px', maxWidth: '900px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '20px', color: '#333' }}>Student</h2>
+      <h2 style={{ textAlign: 'center', marginBottom: '20px', color: '#333' }}>Exam Seating</h2>
 
       {loading && <p style={{ textAlign: 'center' }}>Loading...</p>}
       {error && <div style={{ color: 'red', background: '#fdd', padding: '10px', borderRadius: '5px' }}>{error}</div>}
       {success && <div style={{ color: 'green', background: '#dff0d8', padding: '10px', borderRadius: '5px' }}>{success}</div>}
 
-      <input
-        type="text"
-        placeholder="Search students..."
-        value={searchQuery}
-        onChange={handleSearchChange}
+      
+
+      <select
+        onChange={(e) => setSelectedStudent(students.find(student => student.enrollment === e.target.value))}
+        value={selectedStudent ? selectedStudent.enrollment : ''}
         style={{ width: '100%', padding: '10px', marginBottom: '20px', borderRadius: '4px', border: '1px solid #ddd' }}
-      />
-      {filteredStudents.length === 0 ? (
-        <p>No students found</p>
-      ) : (
-        filteredStudents.map((student) => (
-          <div
-            key={student.enrollment}
-            style={{ background: '#f5f5f5', padding: '15px', marginBottom: '10px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-          >
-            <strong>{student.name}</strong> ({student.enrollment}) | {student.branch} - Sem {student.semester}
-          </div>
-        ))
-      )}
+      >
+        <option value="">Select Student</option>
+        {filteredStudents.map(student => (
+          <option key={student.enrollment} value={student.enrollment}>
+            {student.name} ({student.enrollment})
+          </option>
+        ))}
+      </select>
 
       <form onSubmit={handleSubmit} style={{ margin: '0 auto', maxWidth: '800px' }}>
         {seating.map((exam, index) => (
@@ -248,15 +244,15 @@ const AdminPanel = () => {
               style={{ margin: '5px', padding: '10px', width: 'calc(33% - 10px)', borderRadius: '4px', border: '1px solid #ddd' }}
             />
 
-            {/* Date input with minimum today's date */}
+            {/* Date input */}
             <input
               type="date"
               name="date"
               value={exam.date}
               onChange={(e) => handleChange(e, index)}
-              required
-              style={{ margin: '5px', padding: '10px', width: 'calc(50% - 10px)', borderRadius: '4px', border: '1px solid #ddd' }}
               min={getTodayDate()}
+              required
+              style={{ margin: '5px', padding: '10px', width: 'calc(33% - 10px)', borderRadius: '4px', border: '1px solid #ddd' }}
             />
 
             {/* Time input */}
@@ -266,7 +262,7 @@ const AdminPanel = () => {
               value={exam.time}
               onChange={(e) => handleChange(e, index)}
               required
-              style={{ margin: '5px', padding: '10px', width: 'calc(50% - 10px)', borderRadius: '4px', border: '1px solid #ddd' }}
+              style={{ margin: '5px', padding: '10px', width: 'calc(33% - 10px)', borderRadius: '4px', border: '1px solid #ddd' }}
             />
 
             {/* Seat Number input */}
@@ -277,7 +273,7 @@ const AdminPanel = () => {
               value={exam.seatNumber}
               onChange={(e) => handleChange(e, index)}
               required
-              style={{ margin: '5px', padding: '10px', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
+              style={{ margin: '5px', padding: '10px', width: 'calc(33% - 10px)', borderRadius: '4px', border: '1px solid #ddd' }}
             />
 
             {/* Room Number input */}
@@ -288,40 +284,29 @@ const AdminPanel = () => {
               value={exam.roomNumber}
               onChange={(e) => handleChange(e, index)}
               required
-              style={{ margin: '5px', padding: '10px', width: '100%', borderRadius: '4px', border: '1px solid #ddd' }}
+              style={{ margin: '5px', padding: '10px', width: 'calc(33% - 10px)', borderRadius: '4px', border: '1px solid #ddd' }}
             />
 
-            {/* Remove Exam Button */}
-            {seating.length > 1 && (
-              <button
-                type="button"
-                onClick={() => handleRemoveExam(index)}
-                style={{ background: 'red', color: 'white', padding: '10px', borderRadius: '5px', border: 'none', marginTop: '10px' }}
-              >
-                Remove Exam
-              </button>
-            )}
+            <button type="button" onClick={() => handleRemoveExam(index)} style={{ padding: '8px 16px', backgroundColor: '#f44336', color: 'white', borderRadius: '4px', border: 'none' }}>Remove</button>
           </div>
         ))}
 
-        {/* Add Exam Button */}
         <button
           type="button"
           onClick={handleAddExam}
-          style={{ background: '#4CAF50', color: 'white', padding: '10px', borderRadius: '5px', border: 'none', marginBottom: '20px' }}
+          style={{ padding: '8px 16px', backgroundColor: '#4CAF50', color: 'white', borderRadius: '4px', border: 'none', marginBottom: '20px' }}
         >
           Add Exam
         </button>
 
-        {/* Submit Button */}
         <button
           type="submit"
-          style={{ background: '#007BFF', color: 'white', padding: '10px', borderRadius: '5px', border: 'none' }}
+          style={{ padding: '8px 16px', backgroundColor: '#008CBA', color: 'white', borderRadius: '4px', border: 'none' }}
         >
-          {editId ? 'Update Seating' : 'Save Seating'}
+          Submit Seating
         </button>
       </form>
-    
+
       <h3 style={{ marginTop: '40px', textAlign: 'center' }}>Saved Seatings</h3>
       {savedSeatings.length === 0 ? (
         <p>No seatings available</p>

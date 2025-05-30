@@ -28,12 +28,12 @@ const Navbar = () => {
 
   const navLinks = (
     <>
-      <li><NavLink to="/" style={navLinkStyles}>Home</NavLink></li>
-      <li><NavLink to="/about" style={navLinkStyles}>About</NavLink></li>
-      <li><NavLink to="/gallery" style={navLinkStyles}>Gallery</NavLink></li>
-      <li><NavLink to="/contact" style={navLinkStyles}>Contact</NavLink></li>
-      <li><NavLink to="/studentseating" style={navLinkStyles}>Exam Timetable</NavLink></li>
-      <li><NavLink to="/examseating" style={navLinkStyles}>Exam Seating</NavLink></li>
+      <li><NavLink to="/" style={navLinkStyles} onClick={() => setIsOpen(false)}>Home</NavLink></li>
+      <li><NavLink to="/about" style={navLinkStyles} onClick={() => setIsOpen(false)}>About</NavLink></li>
+      <li><NavLink to="/gallery" style={navLinkStyles} onClick={() => setIsOpen(false)}>Gallery</NavLink></li>
+      <li><NavLink to="/contact" style={navLinkStyles} onClick={() => setIsOpen(false)}>Contact</NavLink></li>
+      <li><NavLink to="/studentseating" style={navLinkStyles} onClick={() => setIsOpen(false)}>Exam Timetable</NavLink></li>
+      <li><NavLink to="/examseating" style={navLinkStyles} onClick={() => setIsOpen(false)}>Exam Seating</NavLink></li>
     </>
   );
 

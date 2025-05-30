@@ -20,16 +20,19 @@ const GalleryEvents = () => {
     try {
       const res = await axios.get(`http://localhost:3000/api/gallery?page=${page}&limit=9`);
       if (res.data && res.data.galleryItems) {
-        setEvents((prevEvents) => [
-          ...prevEvents,
-          ...res.data.galleryItems.filter((event) => !event.deleted),
-        ]);
+        setEvents((prevEvents) => {
+          const newEvents = res.data.galleryItems.filter(
+            (event) => !event.deleted && !prevEvents.some((prevEvent) => prevEvent._id === event._id)
+          );
+          return [...prevEvents, ...newEvents];
+        });
       }
     } catch (error) {
       console.error('Error fetching gallery events:', error);
     }
     setLoading(false);
   };
+  
 
   const handleScroll = (e) => {
     const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
@@ -147,7 +150,9 @@ const GalleryEvents = () => {
         `}
       </style>
 
+      <h3 style={styles.header}></h3>
       <h3 style={styles.header}>Gallery Events</h3>
+
 
       {loading && page === 1 ? (
         <div style={styles.spinner}>
