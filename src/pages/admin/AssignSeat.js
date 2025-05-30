@@ -8,12 +8,12 @@ const AssignSeat = () => {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/exams').then((res) => setExams(res.data));
+    axios.get('https://jmgpc-backend.onrender.com/api/exams').then((res) => setExams(res.data));
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/api/seating', data);
+    await axios.post('https://jmgpc-backend.onrender.com/api/seating', data);
     alert('✅ Seat Assigned');
     setData({});
   };

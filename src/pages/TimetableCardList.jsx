@@ -16,7 +16,7 @@ const TimetableCardList = () => {
   const fetchTimetables = async () => {
     try {
       // Sending GET request to the backend
-      const res = await axios.get('http://localhost:3000/api/timetables');
+      const res = await axios.get('https://jmgpc-backend.onrender.com/api/timetables');
       console.log('Fetched timetables:', res.data);  // Log the response for debugging
       setTimetables(res.data.timetables || []);  // Set the timetables in state
       setLoading(false);  // Set loading to false once data is fetched

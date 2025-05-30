@@ -26,7 +26,7 @@ function Seat() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/find-seat', { rollNumber });
+      const response = await axios.post('https://jmgpc-backend.onrender.com/api/find-seat', { rollNumber });
       if (response.data.seat) {
         setSeatInfo(response.data.seat);
         setError('');

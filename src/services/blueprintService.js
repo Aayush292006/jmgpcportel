@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000/api/blueprints";
+const BASE_URL = "https://jmgpc-backend.onrender.com/api/blueprints";
 
 export const saveBlueprint = (roomId, blueprint) =>
   axios.post(BASE_URL, { roomId, blueprint });

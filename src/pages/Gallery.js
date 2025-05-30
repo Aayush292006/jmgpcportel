@@ -18,7 +18,7 @@ const GalleryEvents = () => {
   const fetchGallery = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:3000/api/gallery?page=${page}&limit=9`);
+      const res = await axios.get(`https://jmgpc-backend.onrender.com/api/gallery?page=${page}&limit=9`);
       if (res.data && res.data.galleryItems) {
         setEvents((prevEvents) => {
           const newEvents = res.data.galleryItems.filter(

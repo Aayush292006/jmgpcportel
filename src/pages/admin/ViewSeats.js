@@ -5,7 +5,7 @@ const ViewSeats = () => {
   const [seats, setSeats] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/seating/all').then((res) => setSeats(res.data));
+    axios.get('https://jmgpc-backend.onrender.com/api/seating/all').then((res) => setSeats(res.data));
   }, []);
 
   return (

@@ -17,7 +17,7 @@ const AddGallery = () => {
   const fetchEvents = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3000/api/gallery');
+      const response = await axios.get('https://jmgpc-backend.onrender.com/api/gallery');
       setEvents(response.data.galleryItems);
       setFadeIn(true);
     } catch (error) {
@@ -46,10 +46,10 @@ const AddGallery = () => {
     setLoading(true);
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3000/api/gallery/${editingId}`, formData);
+        await axios.put(`https://jmgpc-backend.onrender.com/api/gallery/${editingId}`, formData);
         alert('Event updated successfully!');
       } else {
-        await axios.post('http://localhost:3000/api/gallery', formData);
+        await axios.post('https://jmgpc-backend.onrender.com/api/gallery', formData);
         alert('Gallery event added successfully!');
       }
       setNewEvent({ title: '', description: '', link: '' });
@@ -75,7 +75,7 @@ const AddGallery = () => {
         setLoading(true);
 
         // Delete the item from the backend
-        await axios.delete(`http://localhost:3000/api/gallery/${id}`);
+        await axios.delete(`https://jmgpc-backend.onrender.com/api/gallery/${id}`);
 
         // Update the UI (remove the deleted item from the local state)
         setGalleryItems((prevItems) => prevItems.filter(item => item._id !== id));
@@ -153,7 +153,7 @@ const AddGallery = () => {
           {events.map((event) => (
             <div key={event._id} style={styles.card}>
               <img
-                src={`http://localhost:3000${event.imageUrl}`}
+                src={`https://jmgpc-backend.onrender.com${event.imageUrl}`}
                 alt={event.title}
                 style={styles.image}
               />

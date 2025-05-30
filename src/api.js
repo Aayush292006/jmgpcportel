@@ -1,7 +1,7 @@
 // src/api.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api'; // Change port to 3000
+const API_URL = 'https://jmgpc-backend.onrender.com/api'; // Change port to 3000
 
 // ✅ Admin: Add exam seating
 export const addExamSeating = async (examData) => {
@@ -26,7 +26,7 @@ export const getStudentSeating = async (enrollment) => {
 };
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/api',  // Ensure baseURL is consistent
+  baseURL: 'https://jmgpc-backend.onrender.com/api',  // Ensure baseURL is consistent
   withCredentials: true,
 });
 

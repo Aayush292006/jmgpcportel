@@ -13,7 +13,7 @@ const AdminMessages = () => {
   const fetchMessages = async () => {
     setLoading(true); // Start loading
     try {
-      const res = await axios.get("http://localhost:3000/api/contact");
+      const res = await axios.get("https://jmgpc-backend.onrender.com/api/contact");
       setMessages(res.data);
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -25,7 +25,7 @@ const AdminMessages = () => {
 
   const deleteMessage = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/contact/${id}`);
+      await axios.delete(`https://jmgpc-backend.onrender.com/api/contact/${id}`);
       setMessages(messages.filter((msg) => msg._id !== id));
     } catch (error) {
       console.error("Delete failed:", error);

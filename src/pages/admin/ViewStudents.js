@@ -16,7 +16,7 @@ const ViewStudents = () => {
 
   const fetchStudents = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/students');
+      const res = await axios.get('https://jmgpc-backend.onrender.com/api/students');
       setStudents(res.data.students);
       setFilteredStudents(res.data.students);
     } catch (err) {
@@ -71,7 +71,7 @@ const ViewStudents = () => {
     });
   
     try {
-      const res = await axios.put(`http://localhost:3000/api/students/${editingStudent}`, formData);
+      const res = await axios.put(`https://jmgpc-backend.onrender.com/api/students/${editingStudent}`, formData);
       if (res.data.message) {
         alert('Student updated successfully!');
         setEditingStudent(null);
@@ -89,7 +89,7 @@ const ViewStudents = () => {
     if (!window.confirm('Are you sure to delete this student?')) return;
   
     try {
-      const res = await axios.delete(`http://localhost:3000/api/students/${enrollment}`);
+      const res = await axios.delete(`https://jmgpc-backend.onrender.com/api/students/${enrollment}`);
       if (res.data.success) {
         alert('Student deleted!');
         setStudents((prev) => prev.filter((student) => student.enrollment !== enrollment));
@@ -200,7 +200,7 @@ const ViewStudents = () => {
                     <img
                       src={
                         student.photo
-                          ? `http://localhost:3000/uploads/${student.photo}`
+                          ? `https://jmgpc-backend.onrender.com/uploads/${student.photo}`
                           : '/default-photo.jpg'
                       }
                       className="w-10 h-10 rounded-full object-cover"

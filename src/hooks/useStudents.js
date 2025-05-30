@@ -7,7 +7,7 @@ const useStudents = () => {
 
   const fetchStudents = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/students');
+      const res = await axios.get('https://jmgpc-backend.onrender.com/api/students');
       setStudents(res.data.students);
       setLoading(false);
     } catch (error) {

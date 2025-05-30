@@ -5,7 +5,7 @@ const ViewExams = () => {
   const [exams, setExams] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/exams').then((res) => setExams(res.data));
+    axios.get('https://jmgpc-backend.onrender.com/api/exams').then((res) => setExams(res.data));
   }, []);
 
   return (

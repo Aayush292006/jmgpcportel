@@ -54,7 +54,7 @@ const AddStudent = () => {
     formData.append('year', form.year);
 
     try {
-      const res = await axios.post('http://localhost:3000/api/students', formData);
+      const res = await axios.post('https://jmgpc-backend.onrender.com/api/students', formData);
       setMessage(res.data.message || '✅ Student added successfully!');
       setForm({
         name: '',

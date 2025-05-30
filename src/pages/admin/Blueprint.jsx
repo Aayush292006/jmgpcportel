@@ -23,7 +23,7 @@ const BlueprintGenerator = () => {
 
   const fetchRooms = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/rooms");
+      const res = await axios.get("https://jmgpc-backend.onrender.com/api/rooms");
       setRooms(res.data.rooms);
     } catch (err) {
       console.error("Failed to fetch rooms", err);
@@ -194,7 +194,7 @@ const BlueprintGenerator = () => {
 
   const handleSaveBlueprint = async () => {
     try {
-      await axios.post("http://localhost:3000/api/saveBlueprint", { blueprint });
+      await axios.post("https://jmgpc-backend.onrender.com/api/saveBlueprint", { blueprint });
       alert("Blueprint saved successfully!");
     } catch (err) {
       console.error("Error saving blueprint", err);

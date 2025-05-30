@@ -108,3 +108,5 @@ const App = () => {
 };
 
 export default App;
+//https://jmgpcportel.netlify.app
+//https://jmgpc-backend.onrender.com

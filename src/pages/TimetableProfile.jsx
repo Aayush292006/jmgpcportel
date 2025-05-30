@@ -12,7 +12,7 @@ const TimetableProfile = () => {
 
   const fetchTimetable = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/timetables/${branch}/${semester}`);
+      const res = await axios.get(`https://jmgpc-backend.onrender.com/api/timetables/${branch}/${semester}`);
       setTimetable(res.data.timetable || null);
     } catch (err) {
       console.error('Error fetching timetable:', err);

@@ -18,7 +18,7 @@ const EditStudentModal = ({ student, isOpen, onClose, onSave }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put('http://localhost:3000/api/students', formData);
+      const res = await axios.put('https://jmgpc-backend.onrender.com/api/students', formData);
       if (res.data.success) {
         onSave(formData);
         onClose();

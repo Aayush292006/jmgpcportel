@@ -12,7 +12,7 @@ const AddRoom = () => {
   const [editMode, setEditMode] = useState(null);
   const [currentRoom, setCurrentRoom] = useState(null);
 
-  const API_BASE = 'http://localhost:3000/api/rooms';
+  const API_BASE = 'https://jmgpc-backend.onrender.com/api/rooms';
 
   const fetchRooms = () => {
     axios.get(API_BASE)

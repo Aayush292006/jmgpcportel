@@ -17,7 +17,7 @@ const StudentSeating = () => {
       const branch = 'Computer Science';
       const semester = '6';
 
-      const res = await axios.get(`http://localhost:3000/api/timetables?branch=${branch}&semester=${semester}`);
+      const res = await axios.get(`https://jmgpc-backend.onrender.com/api/timetables?branch=${branch}&semester=${semester}`);
       if (Array.isArray(res.data.timetables)) {
         setTimetable(res.data.timetables);
       } else {

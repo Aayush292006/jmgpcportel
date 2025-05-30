@@ -32,7 +32,7 @@ const StudentPanel = () => {
     }
 
     try {
-      const res = await axios.get(`http://localhost:3000/api/seating/${enrollment}`);
+      const res = await axios.get(`https://jmgpc-backend.onrender.com/api/seating/${enrollment}`);
       const data = res.data.data; // Accessing the nested 'data' property in response
       console.log('API Response Data:', data); // Log the response to debug
 

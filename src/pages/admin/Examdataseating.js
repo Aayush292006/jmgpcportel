@@ -28,7 +28,7 @@ const AdminPanel = () => {
   const fetchStudents = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:3000/api/students');
+      const res = await axios.get('https://jmgpc-backend.onrender.com/api/students');
       setStudents(res.data.students || []);
     } catch (err) {
       console.error(err);
@@ -41,7 +41,7 @@ const AdminPanel = () => {
   const fetchSeatings = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:3000/api/seatings');
+      const res = await axios.get('https://jmgpc-backend.onrender.com/api/seatings');
       setSavedSeatings(res.data.seatings || []);
     } catch (err) {
       console.error(err);
@@ -109,13 +109,13 @@ const AdminPanel = () => {
       let response;
       if (editId) {
         // PUT request to update existing seating
-        response = await axios.put(`http://localhost:3000/api/seatings/${editId}`, {
+        response = await axios.put(`https://jmgpc-backend.onrender.com/api/seatings/${editId}`, {
           enrollment: selectedStudent.enrollment,
           exams: examsWithEnrollment,
         });
       } else {
         // POST request to create new seating
-        response = await axios.post('http://localhost:3000/api/seatings', {
+        response = await axios.post('https://jmgpc-backend.onrender.com/api/seatings', {
           enrollment: selectedStudent.enrollment,
           exams: examsWithEnrollment,
         });
@@ -156,7 +156,7 @@ const AdminPanel = () => {
   const handleDelete = async (id) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:3000/api/seatings/${id}`);
+      await axios.delete(`https://jmgpc-backend.onrender.com/api/seatings/${id}`);
       setSavedSeatings((prev) => prev.filter((s) => s._id !== id));
       setSuccess('Seating deleted successfully');
     } catch (err) {

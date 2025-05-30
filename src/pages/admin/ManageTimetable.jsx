@@ -19,7 +19,7 @@ const ManageTimetable = () => {
   const fetchTimetables = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:3000/api/timetables');
+      const res = await axios.get('https://jmgpc-backend.onrender.com/api/timetables');
       setTimetables(res.data.timetables || []);
     } catch (err) {
       console.error('Error fetching timetables:', err);
@@ -59,9 +59,9 @@ const ManageTimetable = () => {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3000/api/timetables/${editingId}`, form);
+        await axios.put(`https://jmgpc-backend.onrender.com/api/timetables/${editingId}`, form);
       } else {
-        await axios.post('http://localhost:3000/api/timetables', form);
+        await axios.post('https://jmgpc-backend.onrender.com/api/timetables', form);
       }
       setForm({
         branch: '',
@@ -92,7 +92,7 @@ const ManageTimetable = () => {
   const deleteTimetable = async (id) => {
     if (window.confirm('Are you sure you want to delete this timetable?')) {
       try {
-        await axios.delete(`http://localhost:3000/api/timetables/${id}`);
+        await axios.delete(`https://jmgpc-backend.onrender.com/api/timetables/${id}`);
         fetchTimetables();
       } catch (err) {
         console.error('Error deleting timetable:', err);
